@@ -1,14 +1,13 @@
 const Net = require('net');
 // The port number and hostname of the server.
 const port = 80;
-const host = '192.168.137.2'
+const host = '192.168.137.249'
 
 // Create a new TCP client.
 const client = new Net.Socket();
-
+// process.on('warning', e => console.warn(e.stack));
 client.connect({ port: port, host: host }), function () {
     console.log('TCP connection established with the server ESP.');
-    client.write('Hello, ESP.');
 };
 
 client.setKeepAlive([true][0]);
@@ -16,14 +15,14 @@ client.setKeepAlive([true][0]);
 const len = (str) => {
     let size = Buffer.from(str).length;
     return size;
-  } 
+}
 
 let teste1 = 'env';
 // var tamanho = len(teste1);
 // console.log(tamanho);
 // client.write('14');
-client.write(teste1.length.toString());
-client.write(teste1);
+client.write('3\r');
+client.write('env\r');
 
 // Create  a local server
 const Koa = require('koa')
@@ -35,8 +34,6 @@ const io = socket(server, {
     cors: {
         origin: '*'
     },
-    pingTimeout: 70000,
-    pingInterval: 30000
 })
 
 const SERVER_HOST = 'localhost'
@@ -50,17 +47,14 @@ io.on('connection', socket => {
     // console.log('Web is connected')
     socket.on('message', data => {
 
-            console.log('Dados WEB: ' + data)
-            client.write(data);
-            io.emit('message', data)
+        console.log('Dados WEB: ' + data)
+        client.write(data);
+        io.emit('message', data)
 
     })
-    client.on('data', function (chunk) {
-        console.log(`${chunk.toString()}.`);
-        socket.on('response', chunk => {
-            console.log('Dados ESP' + chunk)
-            io.emit('response', chunk)
-        })
+    client.on('data', chunk => {
+        console.log(`${chunk.toString()}`);
+        io.emit('response', chunk.toString())
     });
     socket.on('disconnect', () => {
         console.log('Web was disconnected')
