@@ -43,6 +43,4 @@ app.use(
   // https://localhost:3333/api-docs/#/ (URL para acessar documentação)
 );
 
-app.listen(port, () => {
-  console.log(`Listening on port: ${port}`);
-});
+app.listen(process.env.PORT || 3333);
