@@ -1,0 +1,15 @@
+{
+    "name": "web-lab-back",
+    "version": 2,
+    "public": true,
+    "build": {
+        "src": "api/index2.js",
+        "use": "@vercel/node"
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "api/index2.js"
+        }
+    ]
+}
