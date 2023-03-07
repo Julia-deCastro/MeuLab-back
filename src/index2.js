@@ -5,6 +5,7 @@ const { errors } = require('celebrate');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const routes = require('./routes');
+const { response } = require('express');
 
 const port = process.env.PORT || 3333;
 
@@ -42,6 +43,11 @@ app.use(
   swaggerUi.setup(specs, { explorer: true })
   // https://localhost:3333/api-docs/#/ (URL para acessar documentação)
 );
+app.get('/', (request, response) => {
+  return response.status(200).json({
+    notification: 'Ok',
+  })
+})
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
