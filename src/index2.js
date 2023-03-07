@@ -4,7 +4,9 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-const routes = require('../src/routes');
+const routes = require('./routes');
+
+const port = process.env.PORT || 3333;
 
 const app = express();
 app.use(express.static('public'));
@@ -40,10 +42,7 @@ app.use(
   swaggerUi.setup(specs, { explorer: true })
   // https://localhost:3333/api-docs/#/ (URL para acessar documentação)
 );
-app.use('/', (req, res) => {
-  return res.json({
-      success: true,
-      message: "Sucesso!"
-  })
-})
-app.listen(process.env.PORT || 3333);
+
+app.listen(port, () => {
+  console.log(`Listening on port: ${port}`);
+});
