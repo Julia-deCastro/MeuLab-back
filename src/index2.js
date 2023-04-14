@@ -7,7 +7,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const routes = require('./routes');
 const { response } = require('express');
 
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 3330;
 
 const app = express();
 app.use(express.static('public'));
