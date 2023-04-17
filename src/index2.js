@@ -14,6 +14,10 @@ app.use(express.static('public'));
 const corsOptions = {
   exposedHeaders: 'X-Total-Count',
 };
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 const swaggerOptions = {
   swaggerDefinition: {
