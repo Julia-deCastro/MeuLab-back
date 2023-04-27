@@ -42,6 +42,45 @@ module.exports = {
     }
   },
 
+  async getByExperiment(request, response) {
+    try {
+      const fields = request.query;
+      const result = await ScheduleModel.getByExperiment(fields);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Experiment getById failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
+  async getByFields(request, response) {
+    try {
+      const fields = request.query;
+      const result = await ScheduleModel.getByFields(fields);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Experiment getById failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
+  async getByExpUser(request, response) {
+    try {
+      const fields = request.query;
+      const result = await ScheduleModel.getByExpUser(fields);
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`Experiment getById failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
   async update(request, response) {
     try {
       const { id } = request.params;

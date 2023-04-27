@@ -13,6 +13,8 @@ module.exports = {
 
   async getById(user_id) {
     const result = await connection('favorite')
+      .innerJoin("experiment", "favorite.experiment_id", "experiment.id")
+      .distinct()
       .where({ user_id })
       .select('*');
     return result;

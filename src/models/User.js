@@ -1,4 +1,15 @@
 const connection = require('../database/connection');
+const { getById } = require('./Favorite');
+
+const makeFavRelation = (
+  user,
+  favorite_table,
+) => {
+  const favoriteRelation = favorite_table.filter(
+    (elements) => elements.user_id === user.id
+  );
+  user.favorites = favoriteRelation;
+};
 
 module.exports = {
   async create(user) {
@@ -11,6 +22,12 @@ module.exports = {
       .innerJoin("globalUser", "user.globalUser_id", "globalUser.id")
       .distinct()
       .select('*');
+
+    const favorite = getById(result.id);
+    result?.forEach((user) => {
+      makeFavRelation(user, favorite);
+    });
+
     return result;
   },
 
@@ -21,6 +38,10 @@ module.exports = {
       .where({ globalUser_id })
       .select('*')
       .first();
+
+    const favorite = await getById(globalUser_id);
+    makeFavRelation(result, favorite);
+
     return result;
   },
 

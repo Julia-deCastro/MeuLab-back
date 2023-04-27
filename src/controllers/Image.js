@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-const { v4: uuidv4 } = require('uuid');
 const ImageModel = require('../models/Image');
 
 module.exports = {

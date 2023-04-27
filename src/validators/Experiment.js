@@ -21,7 +21,8 @@ module.exports = {
       server_port: Joi.number().required(),
       stream_link: Joi.string().required(),
       duration: Joi.string().required(),
-      disponibility: Joi.boolean().required()
+      disponibility: Joi.boolean().required(),
+      layout: Joi.string().required()
     }),
   }),
 
@@ -75,7 +76,8 @@ module.exports = {
         server_port: Joi.number().optional(),
         stream_link: Joi.string().optional(),
         duration: Joi.string().optional(),
-        disponibility: Joi.boolean().optional()
+        disponibility: Joi.boolean().optional(),
+        layout: Joi.string().optional()
     }),
   }),
 

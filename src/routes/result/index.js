@@ -2,8 +2,8 @@ const express = require('express');
 
 const resultRouter = express.Router();
 
-const resultController = require('../../controllers/Result');
-const resultValidator = require('../../validators/Result');
+const resultController = require('../../controllers/result');
+const resultValidator = require('../../validators/result');
 const auth = require('../../middlewares/authentication');
 
 resultRouter.get('/',

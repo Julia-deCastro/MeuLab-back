@@ -8,28 +8,43 @@ module.exports = {
       })
       .unknown(),
     [Segments.BODY]: Joi.object().keys({
-        experiment_id: Joi.string().
+      experiment_id: Joi.string().
         guid({
-            version: ['uuidv4'],
+          version: ['uuidv4'],
         }).required(),
-        user_id: Joi.string().
+      user_id: Joi.string().
         guid({
-            version: ['uuidv4'],
+          version: ['uuidv4'],
         }).required(),
-        date: Joi.date().required(),
-        hour: Joi.string().required(),
-        wating_confirmation: Joi.boolean().required(),
-        status: Joi.string().valid('done', 'abandoned', 'unrealized').required()
+      date: Joi.date().required(),
+      hour: Joi.string().required(),
+      status: Joi.string().valid('done', 'abandoned', 'unrealized').required()
     }),
   }),
 
-  geAll: celebrate({
+  getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
         authorization: Joi.string().required(),
       })
       .unknown(),
-    }),
+  }),
+
+  getByExperiment: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+  }),
+
+  getByFields: celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        authorization: Joi.string().required(),
+      })
+      .unknown(),
+  }),
 
   getById: celebrate({
     [Segments.HEADERS]: Joi.object()
@@ -62,11 +77,11 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       experiment_id: Joi.string().
         guid({
-            version: ['uuidv4'],
+          version: ['uuidv4'],
         }).optional(),
       user_id: Joi.string().
         guid({
-            version: ['uuidv4'],
+          version: ['uuidv4'],
         }).optional(),
       date: Joi.date().optional(),
       hour: Joi.string().optional(),

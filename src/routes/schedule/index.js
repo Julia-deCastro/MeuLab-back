@@ -7,7 +7,7 @@ const scheduleValidator = require('../../validators/Schedule');
 const auth = require('../../middlewares/authentication');
 
 scheduleRouter.get('/',
-  scheduleValidator.geAll,
+  scheduleValidator.getAll,
   auth.authenticateToken,
   scheduleController.getAll
 );
@@ -16,6 +16,24 @@ scheduleRouter.get(
   scheduleValidator.getById,
   auth.authenticateToken,
   scheduleController.getById
+);
+scheduleRouter.get(
+  '/field/fields',
+  scheduleValidator.getByFields,
+  auth.authenticateToken,
+  scheduleController.getByFields
+);
+scheduleRouter.get(
+  '/experiment/fields',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getByExperiment
+);
+scheduleRouter.get(
+  '/user/fields',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getByExpUser
 );
 scheduleRouter.post(
   '/',

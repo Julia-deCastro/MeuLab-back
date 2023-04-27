@@ -1,8 +1,6 @@
 /* eslint-disable prettier/prettier */
 const { v4: uuidv4 } = require('uuid');
-const { getByClassification } = require('../models/Experiment');
 const ExperimentModel = require('../models/Experiment');
-
 
 module.exports = {
   async create(request, response) {

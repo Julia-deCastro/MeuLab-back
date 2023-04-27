@@ -3,22 +3,11 @@ const path = require("path");
 
 module.exports = (multer({
     storage: multer.diskStorage({
-
-        destination: (req, file, cb) => {
-            cb(null, `./public/upload/images`)
+        destination: function(req, file, cb) {
+            cb(null, `./public/upload/files`)
         },
-        filename: (req, file, cb) => {
-            cb(null, req.params.imageId + path.extname(file.originalname))  
+        filename: function(req, file, cb) {
+            cb(null, req.params.fileId + '.txt')  
         }
     }),
-        
-    fileFilter: (req, file, cb) => {
-        const extensaoImg = ['image/png', 'image/jpg', 'image/jpeg'].find(formatoAceito => formatoAceito == file.mimetype);
-
-        if(extensaoImg){
-            return cb(null, true);
-        }
-
-        return cb(null, false);
-    }
 }));
