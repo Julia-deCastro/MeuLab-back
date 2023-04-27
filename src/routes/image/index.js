@@ -2,8 +2,8 @@ const express = require('express');
 
 const imageRouter = express.Router();
 
-const imageController = require('../../controllers/image');
-const imageValidator = require('../../validators/image');
+const imageController = require('../../controllers/Image');
+const imageValidator = require('../../validators/Image');
 const auth = require('../../middlewares/authentication');
 
 imageRouter.get('/',

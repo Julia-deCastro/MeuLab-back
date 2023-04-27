@@ -2,8 +2,8 @@ const express = require('express');
 
 const subClassificationRouter = express.Router();
 
-const subClassificationController = require('../../controllers/subClassification');
-const subClassificationValidator = require('../../validators/subClassification');
+const subClassificationController = require('../../controllers/SubClassification');
+const subClassificationValidator = require('../../validators/SubClassification');
 const auth = require('../../middlewares/authentication');
 
 subClassificationRouter.get('/',
