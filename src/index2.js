@@ -52,7 +52,7 @@ app.listen(port, () => {
 const Net = require('net');
 // The port number and hostname of the server.
 const TCPport = 80;
-const host = '192.168.137.249'
+const host = '192.168.137.177'
 
 // Create a new TCP client.
 const client = new Net.Socket();
@@ -83,30 +83,50 @@ const io = socket(server, {
   },
 })
 
+require('events').defaultMaxListeners = 100;
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 8080
-// client.on('data', function (chunk) {
-//     console.log(`${chunk.toString()}.`);})
 
-require('events').defaultMaxListeners = 100;
+let isConnected = false;
+
+function makeConnection(data) {
+  if (isConnected) {
+    return;
+  }
+
+  console.log('connecting...');
+  client.connect({ port: data.port, host: data.host }, function () {
+    console.log('TCP connection established with the server ESP.');
+    isConnected = true;
+  });
+}
+
+function sendData(data) {
+  if (client.writable) {
+    console.log('Sending data:');
+    client.write('3\r');
+    client.write(`${data}\r`);
+  } else {
+    console.log('Socket connection closed');
+  }
+}
+
+client.on('data', chunk => {
+  console.log(`${chunk.toString()}`);
+  io.emit('response', chunk.toString())
+});
+
 io.on('connection', socket => {
   socket.on('connectionESP', data => {
-    console.log(data)
-    // client.connect({ port: data.port, host: data.host }), function () {
-    //   console.log('TCP connection established with the server ESP.');
-    // };
+    makeConnection(data);
   })
+})
+
+io.on('connection', socket => {
   socket.on('message', data => {
-
-    console.log('Dados WEB: ' + data)
-    client.write(data);
+    sendData(data);
     io.emit('message', data)
-
   })
-  client.on('data', chunk => {
-    console.log(`${chunk.toString()}`);
-    io.emit('response', chunk.toString())
-  });
 })
 
 server.listen(SERVER_PORT, SERVER_HOST, () => {

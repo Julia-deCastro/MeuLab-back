@@ -1,7 +1,7 @@
 const Net = require('net');
 // The port number and hostname of the server.
 const port = 80;
-const host = '192.168.137.249'
+const host = '192.168.137.177'
 
 // Create a new TCP client.
 const client = new Net.Socket();
@@ -39,8 +39,8 @@ const io = socket(server, {
 const SERVER_HOST = 'localhost'
 const SERVER_PORT = 8080
 
-// client.on('data', function (chunk) {
-//     console.log(`${chunk.toString()}.`);})
+client.on('data', function (chunk) {
+    console.log(`${chunk.toString()}.`);})
 
 
 io.on('connection', socket => {
