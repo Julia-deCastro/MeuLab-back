@@ -1,4 +1,3 @@
-require('dotenv').config();
 const GlobalUser = require("../models/GlobalUser");
 const UserModel = require('../models/User');
 const jwt = require("jsonwebtoken");

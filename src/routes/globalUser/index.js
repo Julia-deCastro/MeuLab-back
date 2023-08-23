@@ -17,10 +17,13 @@ globalUserRouter.get(
   auth.authenticateToken,
   GlobalUserController.getById
 );
-globalUserRouter.get('/user_name/:user_name',
+globalUserRouter.get('/user_name/:user_name/:option',
   GlobalUserController.getByUserName
 );
-globalUserRouter.get('/email/:email',
+globalUserRouter.get('/email/:email/:option',
+  GlobalUserController.getByUserEmail
+);
+globalUserRouter.get('/fields/:fields',
   GlobalUserController.getByUserEmail
 );
 globalUserRouter.get('/type/:type',
@@ -44,6 +47,11 @@ globalUserRouter.put(
   GlobalUserValidator.updatePassword,
   auth.authenticateToken,
   GlobalUserController.updatePassword
+);
+globalUserRouter.put(
+  '/external/updatePass',
+  GlobalUserValidator.updateExternalPassword,
+  GlobalUserController.updateExternalPassword
 );
 globalUserRouter.delete(
   '/refused/:id',

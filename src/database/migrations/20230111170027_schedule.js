@@ -7,6 +7,7 @@ exports.up = function(knex) {
       table.time("hour").notNullable();
       table.tinyint("wating_confirmation").defaultTo(0).notNullable();
       table.enu("status", ["done", "abandoned", "unrealized"]);
+      table.date("create_in").notNullable();
 
       table
       .foreign("experiment_id")

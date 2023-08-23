@@ -13,7 +13,9 @@ exports.up = function(knex) {
       table.string("stream_link").notNullable();
       table.time("duration").notNullable();
       table.tinyint("disponibility").defaultTo(1).notNullable();
-      table.string("layout").defaultTo("LayoutOne").notNullable();
+      table.string("layout").defaultTo("LayoutOne");
+      table.string("gweb_link");
+      table.date("create_in").notNullable();
 
       table
       .foreign("classification")

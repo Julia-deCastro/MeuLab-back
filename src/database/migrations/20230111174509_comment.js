@@ -4,6 +4,7 @@ exports.up = function(knex) {
       table.string("user_id").notNullable();
       table.longtext("text").notNullable();
       table.tinyint("favorite").defaultTo(0).notNullable();
+      table.date("create_in").notNullable();
 
       table
       .foreign("user_id")

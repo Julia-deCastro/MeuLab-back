@@ -17,8 +17,8 @@ module.exports = {
         authorization: Joi.string().required(),
       })
       .unknown(),
-    }),
-    
+  }),
+
   getById: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
@@ -59,10 +59,10 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
-        name: Joi.string().optional(),
-        email: Joi.string().email().optional(),
-        user_name: Joi.string().optional(),
-        password: Joi.string().optional().min(8).max(20)
+      name: Joi.string().optional(),
+      email: Joi.string().email().optional(),
+      user_name: Joi.string().optional(),
+      password: Joi.string().optional().min(8).max(20)
     }),
   }),
 
@@ -80,8 +80,19 @@ module.exports = {
         .required(),
     }),
     [Segments.BODY]: Joi.object().keys({
-        currentPass: Joi.string().optional().min(8).max(20),
-        newPass: Joi.string().optional().min(8).max(20)
+      currentPass: Joi.string().optional().min(8).max(20),
+      newPass: Joi.string().optional().min(8).max(20)
+    }),
+  }),
+
+  updateExternalPassword: celebrate({
+    [Segments.BODY]: Joi.object().keys({
+      id: Joi.string()
+        .guid({
+          version: ['uuidv4'],
+        })
+        .required(),
+      pass: Joi.string().required().min(8).max(20)
     }),
   }),
 

@@ -2,6 +2,7 @@
 const { v4: uuidv4 } = require('uuid');
 const Mail = require('../mail/mail');
 const GlobalUserModel = require('../models/GlobalUser');
+const RecoverPassModel = require('../models/RecoverPassword');
 const { createHmac } = require('crypto');
 require('dotenv').config();
 
@@ -18,6 +19,9 @@ module.exports = {
       const globalUser = request.body;
       globalUser.id = uuidv4();
       globalUser.password = encryptData(globalUser.password);
+
+      const date = new Date();
+      globalUser.create_in = date;
 
       await GlobalUserModel.create(globalUser);
       return response.status(201).json({ id: globalUser.id });
@@ -57,8 +61,13 @@ module.exports = {
 
   async getByUserName(request, response) {
     try {
-      const { user_name } = request.params;
-      const result = await GlobalUserModel.getByUserName(user_name);
+      const { user_name, option } = request.params;
+      let result;
+      if (!option) {
+        result = await GlobalUserModel.getByUserName(user_name);
+      } else {
+        result = await GlobalUserModel.getByFields({ user_name: user_name });
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.error(`GlobalUser getByUserName failed: ${err}`);
@@ -70,8 +79,13 @@ module.exports = {
 
   async getByUserEmail(request, response) {
     try {
-      const { email } = request.params;
-      const result = await GlobalUserModel.getByUserEmail(email);
+      const { email, option } = request.params;
+      let result;
+      if (!option) {
+        result = await GlobalUserModel.getByUserName(email);
+      } else {
+        result = await GlobalUserModel.getByFields({ email: email });
+      }
       return response.status(200).json(result);
     } catch (err) {
       console.error(`GlobalUser getByEmail failed: ${err}`);
@@ -143,13 +157,36 @@ module.exports = {
     }
   },
 
+  async updateExternalPassword(request, response) {
+    const { id, pass } = request.body;
+    const newPass = encryptData(pass);
+    try {
+      const data = await RecoverPassModel.getById(id);
+      if (data === undefined) {
+        return response.status(540).json({
+          notification: 'Not Found',
+        })
+      } else {
+        await GlobalUserModel.updateById(id, { password: newPass });
+        await RecoverPassModel.deleteById(id);
+        return response.status(200).json('OK');
+      }
+    } catch (err) {
+      console.error(`GlobalUser update failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
   async userRefused(request, response) {
     try {
       const { id } = request.params;
 
-      const userGlobal = await GlobalUserModel.getById(id);
+      const data = await GlobalUserModel.getById(id);
+      const userGlobal = JSON.parse(JSON.stringify(data));
       await GlobalUserModel.deleteById(id);
-      Mail.UserRefused(userGlobal.email, userGlobal.name);
+      Mail.UserRefused(userGlobal[0].email, userGlobal[0].name);
       return response.status(200).json("OK");
 
     } catch (err) {
