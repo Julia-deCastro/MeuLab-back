@@ -11,6 +11,10 @@ const fs = require('fs');
 const port = process.env.PORT || 3347;
 
 const app = express();
+app.use(express.static('public'));
+const corsOptions = {
+  exposedHeaders: 'X-Total-Count',
+};
 
 // Carregue os certificados
 const privateKey = fs.readFileSync('../../certs/privkey.pem', 'utf8');
@@ -20,10 +24,6 @@ const certificate = fs.readFileSync('../../certs/cert.pem', 'utf8');
 const credentials = {
   key: privateKey,
   cert: certificate,
-};
-
-const corsOptions = {
-  exposedHeaders: 'X-Total-Count',
 };
 
 const swaggerOptions = {
