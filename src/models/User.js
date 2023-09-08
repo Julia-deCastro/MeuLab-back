@@ -66,6 +66,18 @@ module.exports = {
     return result;
   },
 
+  async getCountByCountry() {
+    const result = await connection('user')
+      .select('country')
+      .count('globalUser_id as user_count')
+      .groupBy('country');
+  
+      const countries = result.map(entry => entry.country);
+      const userCounts = result.map(entry => entry.user_count);
+    
+      return { countries, userCounts };
+  },
+
   async getBySituation(fields) {
     const result = await connection('user')
       .innerJoin("globalUser", "user.globalUser_id", "globalUser.id")

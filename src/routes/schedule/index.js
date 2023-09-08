@@ -35,6 +35,36 @@ scheduleRouter.get(
   auth.authenticateToken,
   scheduleController.getByExpUser
 );
+scheduleRouter.get(
+  '/user/count/fields',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getByUserCount
+);
+scheduleRouter.get(
+  '/date/dayInDateRange/:startDate/:endDate/:experiment_id',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getCountByDayInDateRange
+);
+scheduleRouter.get(
+  '/month/getCountByMonthInDateRange/:startDate/:endDate/:experiment_id',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getCountByMonthInDateRange
+);
+scheduleRouter.get(
+  '/year/getCountByYearInDateRange/:startDate/:endDate/:experiment_id',
+  scheduleValidator.getByExperiment,
+  auth.authenticateToken,
+  scheduleController.getCountByYearInDateRange
+);
+scheduleRouter.get(
+  '/week/getCountByWeekInDateRange/:startDate/:endDate/:experiment_id',
+  // scheduleValidator.getByExperiment,
+  // auth.authenticateToken,
+  scheduleController.getCountByWeekInDateRange
+);
 scheduleRouter.post(
   '/',
   scheduleValidator.create,

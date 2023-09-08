@@ -7,6 +7,8 @@ module.exports = {
     try {
       const comment = request.body;
       comment.id = uuidv4();
+      const date = new Date();
+      comment.create_in = date;
       await CommentModel.create(comment);
       return response.status(201).json({ id: comment.id });
     } catch (err) {

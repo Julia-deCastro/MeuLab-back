@@ -75,6 +75,18 @@ module.exports = {
     }
   },
 
+  async getByCountry(request, response) {
+    try {
+      const result = await UserModel.getCountByCountry();
+      return response.status(200).json(result);
+    } catch (err) {
+      console.error(`User getByCountry failed: ${err}`);
+      return response.status(500).json({
+        notification: 'Internal server error',
+      });
+    }
+  },
+
   async userAccept(request, response) {
     try {
       const { globalUser_id } = request.params;

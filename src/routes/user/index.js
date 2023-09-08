@@ -29,6 +29,11 @@ userRouter.get(
   auth.authenticateToken,
   userController.getByAprove
 );
+userRouter.get(
+  '/country/count',
+  // auth.authenticateToken,
+  userController.getByCountry
+);
 userRouter.post(
   '/',
   userValidator.create,

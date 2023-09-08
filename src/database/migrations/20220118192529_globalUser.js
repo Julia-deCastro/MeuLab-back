@@ -6,6 +6,7 @@ exports.up = function(knex) {
     table.string("user_name").unique().notNullable();
     table.text("password").notNullable();
     table.string("type").defaultTo("user");
+    table.date("create_in").notNullable();
   })
 };
 

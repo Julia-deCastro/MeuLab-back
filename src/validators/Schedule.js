@@ -18,7 +18,8 @@ module.exports = {
         }).required(),
       date: Joi.date().required(),
       hour: Joi.string().required(),
-      status: Joi.string().valid('done', 'abandoned', 'unrealized').required()
+      status: Joi.string().valid('done', 'abandoned', 'unrealized').required(),
+      wating_confirmation: Joi.boolean().optional()
     }),
   }),
 

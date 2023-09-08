@@ -3,6 +3,7 @@ exports.up = function(knex) {
       table.string("id").primary().unique().notNullable();
       table.string("schedule_id").notNullable();
       table.string("result").notNullable();
+      table.date("create_in").notNullable();
 
       table
       .foreign("schedule_id")

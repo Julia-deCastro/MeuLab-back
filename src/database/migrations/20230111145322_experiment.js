@@ -15,6 +15,7 @@ exports.up = function(knex) {
       table.tinyint("disponibility").defaultTo(1).notNullable();
       table.string("layout").defaultTo("LayoutOne");
       table.string("gweb_link");
+      table.date("create_in").notNullable();
 
       table
       .foreign("classification")

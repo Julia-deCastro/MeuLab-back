@@ -105,13 +105,8 @@ module.exports = {
     const images = await connection('image').select('*');
     const inputs = await connection('exp_input_relation').select('*');
 
-    result?.forEach((exps) => {
-      makeImageRelation(exps, images);
-    });
-
-    result?.forEach((exps) => {
-      makeInputRelation(exps, inputs);
-    });
+    makeImageRelation(result, images);
+    makeInputRelation(result, inputs);
 
     return result;
   },

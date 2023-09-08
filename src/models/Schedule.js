@@ -84,7 +84,7 @@ module.exports = {
     const result = await connection('schedule')
       .where(fields)
       .select('*')
-      .orderBy('hour', 'asc');;
+      .orderBy('hour', 'asc');
     const user = await connection('globalUser').select('name', 'id');
 
     result?.forEach((schedule) => {
@@ -94,10 +94,74 @@ module.exports = {
     return result;
   },
 
+  async getByUserCount(fields) {
+    const result = await connection('schedule')
+      .count('* as count')
+      .where(fields)
+      .first();
+    return result.count;
+  },
+
   async getByFields(fields) {
     const result = await connection('schedule')
       .where(fields)
       .select('*');
     return result;
   },
+
+  async getCountByDayInDateRange(startDate, endDate, experiment_id) {
+    const results = await connection('schedule')
+      .where({ experiment_id })
+      .where('status', 'done')
+      .whereBetween('date', [startDate, endDate])
+      .select('date')
+      .count('* as count')
+      .groupBy('date')
+      .orderBy('date');
+
+    return results;
+  },
+
+  async getCountByMonthInDateRange(startDate, endDate, experiment_id) {
+    const results = await connection('schedule')
+      .whereBetween('date', [startDate, endDate])
+      .where('status', 'done')
+      .where({ experiment_id })
+      .select(connection.raw('DATE_FORMAT(date, "%Y-%m") as month'), connection.raw('COUNT(*) as count'))
+      .groupByRaw('DATE_FORMAT(date, "%Y-%m")')
+      .orderByRaw('DATE_FORMAT(date, "%Y-%m")');
+  
+    return results;
+  },
+
+  async getCountByYearInDateRange(startDate, endDate, experiment_id) {
+    const results = await connection('schedule')
+      .whereBetween('date', [startDate, endDate])
+      .where('status', 'done')
+      .where({ experiment_id })
+      .select(connection.raw('YEAR(date) as year'), connection.raw('COUNT(*) as count'))
+      .groupByRaw('YEAR(date)')
+      .orderByRaw('YEAR(date)');
+  
+    return results;
+  },
+
+  async getCountByWeekInDateRange(startDate, endDate, experiment_id) {
+    const results = await connection('schedule')
+      .whereBetween('date', [startDate, endDate])
+      .where('status', 'done')
+      .where({ experiment_id })
+      .select(
+        connection.raw('YEAR(date) as year'),
+        connection.raw('WEEK(date) as week'),
+        connection.raw('MIN(date) as weekStart'),
+        connection.raw('DATE_ADD(MAX(date), INTERVAL 6 DAY) as weekEnd'),
+        connection.raw('COUNT(*) as count')
+      )
+      .groupByRaw('YEAR(date), WEEK(date)')
+      .orderByRaw('YEAR(date), WEEK(date)');
+  
+    return results;
+  }
+  
 };

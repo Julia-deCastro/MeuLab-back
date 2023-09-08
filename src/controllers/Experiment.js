@@ -7,6 +7,8 @@ module.exports = {
     try {
       const experiment = request.body;
       experiment.id = uuidv4();
+      const date = new Date();
+      experiment.create_in = date;
       await ExperimentModel.create(experiment);
       return response.status(201).json({ id: experiment.id });
     } catch (err) {
