@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/Julia-deCastro/MeuLab-back/issues"
   },
-  "homepage": "https://github.com/Julia-deCastro/MeuLab-back#readme",
+  "homepage": "https://xivec.fisica.ufmg.br/~jcastro ",
   "dependencies": {
     "celebrate": "^15.0.1",
     "cors": "^2.8.5",

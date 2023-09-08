@@ -42,6 +42,11 @@ app.use(
   swaggerUi.setup(specs, { explorer: true })
   // https://localhost:3333/api-docs/#/ (URL para acessar documentação)
 );
+app.use('/', (req, res) => {
+  return res.status(200).json({
+    notification: 'Ok, server is running!',
+  });
+})
 
 app.listen(port, () => {
   console.log(`Listening on port: ${port}`);
@@ -85,7 +90,7 @@ const io = socket(server, {
 
 require('events').defaultMaxListeners = 100;
 const SERVER_HOST = 'localhost'
-const SERVER_PORT = 8080
+const SERVER_PORT = 8085;
 
 let isConnected = false;
 
@@ -100,6 +105,11 @@ function makeConnection(data) {
     isConnected = true;
   });
 }
+
+// client.connect({ port: 1080, host: '192.168.137.199' }, function () {
+//   console.log('TCP connection established with the server ESP.');
+//   isConnected = true;
+// });
 
 function sendData(data) {
   if (client.writable) {

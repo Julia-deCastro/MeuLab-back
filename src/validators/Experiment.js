@@ -22,7 +22,7 @@ module.exports = {
       stream_link: Joi.string().required(),
       duration: Joi.string().required(),
       disponibility: Joi.boolean().required(),
-      layout: Joi.string().required()
+      gweb_link: Joi.string().required()
     }),
   }),
 
@@ -77,7 +77,7 @@ module.exports = {
         stream_link: Joi.string().optional(),
         duration: Joi.string().optional(),
         disponibility: Joi.boolean().optional(),
-        layout: Joi.string().optional()
+        gweb_link: Joi.string().optional()
     }),
   }),
 
