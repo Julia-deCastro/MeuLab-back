@@ -7,7 +7,7 @@ const AdmValidator = require('../../validators/Adm');
 const auth = require('../../middlewares/authentication');
 
 admRouter.get('/',
-  AdmValidator.geAll,
+  AdmValidator.getAll,
   auth.authenticateToken,
   AdmController.getAll
 );

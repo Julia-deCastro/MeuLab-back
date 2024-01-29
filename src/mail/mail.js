@@ -157,4 +157,22 @@ module.exports = {
     return Email.sendEmail(emailContent);
   },
 
+  Contact(to, name, email, phone, message) {
+    const fontSizePadrao = '15px';
+    const content = `Nome: ${name}, Telefone: ${phone}, E-mail: ${email}
+    Mensagem: ${message}`;
+    const body = `<div style="font-size: ${fontSizePadrao};"><p>Nome: ${name}</p>
+    <p>Telefone: ${phone}</p><p>E-mail: ${email}</p><br/>
+    <p>Mensagem: ${message}</p>
+    </div>`;
+    const subject = 'Contato';
+    const emailContent = {
+      to,
+      subject,
+      text: content,
+      html: body
+    };
+    return Email.sendEmail(emailContent);
+  },
+
 };

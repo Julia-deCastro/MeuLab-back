@@ -7,7 +7,7 @@ const favoriteValidator = require('../../validators/Favorite');
 const auth = require('../../middlewares/authentication');
 
 favoriteRouter.get('/',
-  favoriteValidator.geAll,
+  favoriteValidator.getAll,
   auth.authenticateToken,
   favoriteController.getAll
 );

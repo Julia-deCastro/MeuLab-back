@@ -5,13 +5,12 @@ module.exports = {
     [Segments.BODY]: Joi.object().keys({
       name: Joi.string().required(),
       email: Joi.string().email().required(),
-      user_name: Joi.string().required(),
       password: Joi.string().required().min(8).max(20),
       type: Joi.string().optional()
     }),
   }),
 
-  geAll: celebrate({
+  getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
         authorization: Joi.string().required(),

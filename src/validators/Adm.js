@@ -12,7 +12,7 @@ module.exports = {
     }),
   }),
 
-  geAll: celebrate({
+  getAll: celebrate({
     [Segments.HEADERS]: Joi.object()
       .keys({
         authorization: Joi.string().required(),

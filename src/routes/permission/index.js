@@ -7,7 +7,7 @@ const permissionValidator = require('../../validators/Permission');
 const auth = require('../../middlewares/authentication');
 
 permissionRouter.get('/',
-  permissionValidator.geAll,
+  permissionValidator.getAll,
   auth.authenticateToken,
   permissionController.getAll
 );

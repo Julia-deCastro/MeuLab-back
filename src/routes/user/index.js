@@ -7,7 +7,7 @@ const userValidator = require('../../validators/User');
 const auth = require('../../middlewares/authentication');
 
 userRouter.get('/',
-  userValidator.geAll,
+  userValidator.getAll,
   auth.authenticateToken,
   userController.getAll
 );

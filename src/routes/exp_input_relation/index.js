@@ -7,7 +7,7 @@ const exp_input_relationValidator = require('../../validators/Exp_Input_Relation
 const auth = require('../../middlewares/authentication');
 
 exp_input_relationRouter.get('/',
-  exp_input_relationValidator.geAll,
+  exp_input_relationValidator.getAll,
   auth.authenticateToken,
   exp_input_relationController.getAll
 );

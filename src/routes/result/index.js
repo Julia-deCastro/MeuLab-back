@@ -7,7 +7,7 @@ const resultValidator = require('../../validators/Result');
 const auth = require('../../middlewares/authentication');
 
 resultRouter.get('/',
-  resultValidator.geAll,
+  resultValidator.getAll,
   auth.authenticateToken,
   resultController.getAll
 );

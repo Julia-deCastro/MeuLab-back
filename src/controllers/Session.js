@@ -7,9 +7,9 @@ require('dotenv').config();
 module.exports = {
   async signIn(request, response) {
     try {
-      const { user_name, password } = request.body;
+      const { email, password } = request.body;
 
-      const user = await GlobalUser.getByFields({ user_name: user_name });
+      const user = await GlobalUser.getByFields({ email: email });
       if (user.type === "adm") {
         return response
         .status(520)
@@ -50,9 +50,9 @@ module.exports = {
 
   async signInAdm(request, response) {
     try {
-      const { user_name, password } = request.body;
+      const { email, password } = request.body;
 
-      const user = await GlobalUser.getByFields({ user_name: user_name });
+      const user = await GlobalUser.getByFields({ email: email });
       if (user.type === "user") {
         return response
         .status(520)

@@ -7,7 +7,7 @@ const experimentValidator = require('../../validators/Experiment');
 const auth = require('../../middlewares/authentication');
 
 experimentRouter.get('/',
-  experimentValidator.geAll,
+  experimentValidator.getAll,
   auth.authenticateToken,
   experimentController.getAll
 );

@@ -7,7 +7,7 @@ const GraphicLineValidator = require('../../validators/Graphic_Line');
 const auth = require('../../middlewares/authentication');
 
 graphicLineRouter.get('/',
-  GraphicLineValidator.geAll,
+  GraphicLineValidator.getAll,
   auth.authenticateToken,
   GraphicLineController.getAll
 );

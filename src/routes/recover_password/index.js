@@ -12,7 +12,7 @@ recoverPassRouter.post(
   RecoverPassController.create
 );
 recoverPassRouter.get('/',
-  RecoverPassValidator.geAll,
+  RecoverPassValidator.getAll,
   auth.authenticateToken,
   RecoverPassController.getAll
 );

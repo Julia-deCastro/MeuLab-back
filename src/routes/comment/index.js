@@ -8,7 +8,7 @@ const auth = require('../../middlewares/authentication');
 
 
 commentRouter.get('/',
-  commentValidator.geAll,
+  commentValidator.getAll,
   auth.authenticateToken,
   commentController.getAll
 );
