@@ -8,12 +8,12 @@ exports.up = function(knex) {
       table.string("images").notNullable();
       table.tinyint("featured").defaultTo(0).notNullable();
       table.string("exemplary").notNullable();
-      table.string("server_ip").notNullable();
-      table.integer("server_port").notNullable();
-      table.string("stream_link").notNullable();
+      table.string("server_ip");
+      table.integer("server_port");
+      table.string("stream_link");
       table.time("duration").notNullable();
       table.tinyint("disponibility").defaultTo(1).notNullable();
-      table.string("layout").defaultTo("LayoutOne");
+      table.string("layout");
       table.string("gweb_link");
       table.date("create_in").notNullable();
 

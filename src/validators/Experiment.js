@@ -17,9 +17,9 @@ module.exports = {
       images: Joi.string().required(),
       featured: Joi.boolean().required(),
       exemplary: Joi.number().required(),
-      server_ip: Joi.string().required(),
-      server_port: Joi.number().required(),
-      stream_link: Joi.string().required(),
+      server_ip: Joi.string().optional(),
+      server_port: Joi.number().optional(),
+      stream_link: Joi.string().optional(),
       duration: Joi.string().required(),
       disponibility: Joi.boolean().required(),
       gweb_link: Joi.string().required()
