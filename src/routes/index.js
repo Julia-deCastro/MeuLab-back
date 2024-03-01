@@ -20,6 +20,7 @@ const inputRouter = require('./input');
 const exp_input_relationRouter = require('./exp_input_relation');
 const graphicRouter = require('./graphic');
 const graphicLineRouter = require('./graphic_line');
+const contactRouter = require('./contact');
 
 const routes = express.Router();
 
@@ -43,5 +44,6 @@ routes.use('/inputs', inputRouter);
 routes.use('/exp_input_relations', exp_input_relationRouter);
 routes.use('/graphics', graphicRouter);
 routes.use('/graphicLines', graphicLineRouter);
+routes.use('/contact', contactRouter);
 
 module.exports = routes;
