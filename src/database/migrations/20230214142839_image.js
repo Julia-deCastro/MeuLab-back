@@ -2,6 +2,7 @@ exports.up = function(knex) {
   return knex.schema.createTable("image", (table) => {
     table.string("experiment_id").notNullable();
     table.string("image").notNullable();
+    table.string("type").notNullable();
 
     table
     .foreign("experiment_id")

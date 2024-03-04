@@ -13,6 +13,7 @@ module.exports = {
         version: ['uuidv4'],
       }).required(),
       image: Joi.string().required(),
+      type: Joi.string().required(),
     }),
   }),
 
@@ -42,6 +43,7 @@ module.exports = {
     }),
     [Segments.BODY]: Joi.object().keys({
       image: Joi.string().optional(),
+      type: Joi.string().optional(),
     }),
   }),
 
