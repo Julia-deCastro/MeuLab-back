@@ -11,7 +11,7 @@ imageRouter.get('/',
   imageController.getAll
 );
 imageRouter.get(
-  '/:id',
+  '/:experiment_id',
   imageValidator.getById,
   auth.authenticateToken,
   imageController.getById
@@ -23,13 +23,13 @@ imageRouter.post(
   imageController.create
 );
 imageRouter.put(
-  '/:id',
+  '/:experiment_id',
   imageValidator.update,
   auth.authenticateToken,
   imageController.update
 );
 imageRouter.delete(
-  '/:id',
+  '/:experiment_id',
   imageValidator.delete,
   auth.authenticateToken,
   imageController.delete

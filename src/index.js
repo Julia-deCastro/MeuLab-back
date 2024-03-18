@@ -1,71 +1,68 @@
-const Net = require('net');
-// The port number and hostname of the server.
-const port = 80;
-const host = '192.168.137.177'
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { errors } = require('celebrate');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+const routes = require('./routes');
+const https = require('https');
+const fs = require('fs');
 
-// Create a new TCP client.
-const client = new Net.Socket();
-// process.on('warning', e => console.warn(e.stack));
-client.connect({ port: port, host: host }), function () {
-    console.log('TCP connection established with the server ESP.');
+const port = process.env.PORT || 3347;
+
+const app = express();
+app.use(express.static('public'));
+const corsOptions = {
+  exposedHeaders: 'X-Total-Count',
 };
 
-client.setKeepAlive([true][0]);
+// Carregue os certificados
+const privateKey = fs.readFileSync('../../certs/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('../../certs/cert.pem', 'utf8');
+//const ca = fs.readFileSync('caminho_para_ca_bundle.pem', 'utf8'); // Opcional, se houver bundle de certificados intermediários
 
-const len = (str) => {
-    let size = Buffer.from(str).length;
-    return size;
-}
+const credentials = {
+  key: privateKey,
+  cert: certificate,
+};
 
-let teste1 = 'env';
-// var tamanho = len(teste1);
-// console.log(tamanho);
-// client.write('14');
-client.write('3\r');
-client.write('env\r');
-
-// Create  a local server
-const Koa = require('koa')
-const http = require('http')
-const socket = require('socket.io')
-const app = new Koa()
-const server = http.createServer(app.callback())
-const io = socket(server, {
-    cors: {
-        origin: '*'
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'WebLab - Swagger',
+      description: 'Documentação do projeto desenvolvido pelo EITA.',
+      version: '1.0.0',
     },
-})
+    servers: [
+      {
+        url: 'https://localhost:3347', // Atualize a porta para 3347 para usar HTTPS
+      },
+    ],
+  },
+  apis: ['./src/routes/**/doc/*.js'],
+};
 
-const SERVER_HOST = 'localhost'
-const SERVER_PORT = 8080
+const specs = swaggerJsDoc(swaggerOptions);
 
-client.on('data', function (chunk) {
-    console.log(`${chunk.toString()}.`);})
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(routes);
+app.use(errors());
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(specs, { explorer: true })
+  // https://localhost:3347/api-docs/#/ (URL para acessar documentação)
+);
+app.use('/', (req, res) => {
+  return res.status(200).json({
+    notification: 'Ok, server is running!',
+  });
+});
 
+const httpsServer = https.createServer(credentials, app);
 
-io.on('connection', socket => {
-    // console.log('Web is connected')
-    socket.on('message', data => {
-
-        console.log('Dados WEB: ' + data)
-        client.write(data);
-        io.emit('message', data)
-
-    })
-    client.on('data', chunk => {
-        console.log(`${chunk.toString()}`);
-        io.emit('response', chunk.toString())
-    });
-    socket.on('disconnect', () => {
-        console.log('Web was disconnected')
-    })
-})
-
-server.listen(SERVER_PORT, SERVER_HOST, () => {
-    console.log(`Server is running at ${SERVER_HOST}:${SERVER_PORT}`)
-})
-
-
-client.on('end', function () {
-    console.log('Requested an end to the TCP connection');
+httpsServer.listen(port, () => {
+  console.log(`Listening on port (HTTPS): ${port}`);
 });
